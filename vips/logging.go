@@ -33,7 +33,6 @@ var (
 // and called by glib and libvips for each logging message. It will call govipsLog
 // which in turn will filter based on verbosity and direct the messages to the
 // currently chosen LoggingHandlerFunction.
-//
 //export govipsLoggingHandler
 func govipsLoggingHandler(messageDomain *C.char, messageLevel C.int, message *C.char) {
 	govipsLog(C.GoString(messageDomain), LogLevel(messageLevel), C.GoString(message))

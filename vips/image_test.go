@@ -518,6 +518,18 @@ func TestImageRef_Label(t *testing.T) {
 	require.NoError(t, err)
 }
 
+func TestImageRef_Label_With_DPI(t *testing.T) {
+	Startup(nil)
+
+	image, err := NewImageFromFile(resources + "jpg-24bit.jpg")
+	require.NoError(t, err)
+
+	lp := &LabelParams{Text: "Text label", DPI: 75, Opacity: 0.7}
+
+	err = image.Label(lp)
+	require.NoError(t, err)
+}
+
 func TestImageRef_Composite(t *testing.T) {
 	Startup(nil)
 

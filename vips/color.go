@@ -8,6 +8,13 @@ type Color struct {
 	R, G, B uint8
 }
 
+var (
+	// ColorBlack is a shortcut to black RGB color representation.
+	ColorBlack = Color{0, 0, 0}
+	// ColorWhite is a shortcut to white RGB color representation.
+	ColorWhite = Color{255, 255, 255}
+)
+
 // ColorRGBA represents an RGB with alpha channel (A)
 type ColorRGBA struct {
 	R, G, B, A uint8

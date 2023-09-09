@@ -173,6 +173,7 @@ type ExportParams struct {
 	OptimizeScans      bool          // jpeg param
 	QuantTable         int           // jpeg param
 	Speed              int           // avif param
+	Distance           float64       //jxl param
 }
 
 // NewDefaultExportParams creates default values for an export when image type is not JPEG, PNG or WEBP.
@@ -867,6 +868,7 @@ func (r *ImageRef) Export(params *ExportParams) ([]byte, *ImageMetadata, error) 
 			Quality:  params.Quality,
 			Lossless: params.Lossless,
 			Effort:   params.Effort,
+			Distance: params.Distance,
 		})
 	default:
 		format = ImageTypeJPEG

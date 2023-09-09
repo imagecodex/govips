@@ -404,14 +404,16 @@ int set_jp2ksave_options(VipsOperation *operation, SaveParams *params) {
   return ret;
 }
 
+// https://www.libvips.org/API/current/VipsForeignSave.html#vips-jxlsave-buffer
 int set_jxlsave_options(VipsOperation *operation, SaveParams *params) {
   int ret = vips_object_set(
-      VIPS_OBJECT(operation), "tier", params->jxlTier,
-      "distance", params->jxlDistance, "effort", params->jxlEffort,
-      "lossless", params->jxlLossless, NULL);
+      VIPS_OBJECT(operation), "tier", params->jxlTier, 
+      "effort", params->jxlEffort, "lossless", params->jxlLossless, NULL);
 
   if (!ret && params->quality) {
     ret = vips_object_set(VIPS_OBJECT(operation), "Q", params->quality, NULL);
+  } else {
+    ret = vips_object_set(VIPS_OBJECT(operation), "distance", params->jxlDistance, NULL);
   }
 
   return ret;

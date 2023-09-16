@@ -10,6 +10,7 @@ typedef struct {
   int OffsetY;
   VipsAlign Align;
   int DPI;
+  int AutofitDPI;
   int Margin;
   float Opacity;
   double Color[3];

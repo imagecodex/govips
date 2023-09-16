@@ -19,30 +19,32 @@ const DefaultFont = "sans 10"
 
 // LabelParams represents a text-based label
 type LabelParams struct {
-	Text      string
-	Font      string
-	Width     Scalar
-	Height    Scalar
-	OffsetX   Scalar
-	OffsetY   Scalar
-	Opacity   float32
-	Color     Color
-	Alignment Align
-	DPI       int
+	Text       string
+	Font       string
+	Width      Scalar
+	Height     Scalar
+	OffsetX    Scalar
+	OffsetY    Scalar
+	Opacity    float32
+	Color      Color
+	Alignment  Align
+	DPI        int
+	AutofitDPI int
 }
 
 type vipsLabelOptions struct {
-	Text      *C.char
-	Font      *C.char
-	Width     C.int
-	Height    C.int
-	OffsetX   C.int
-	OffsetY   C.int
-	Alignment C.VipsAlign
-	DPI       C.int
-	Margin    C.int
-	Opacity   C.float
-	Color     [3]C.double
+	Text       *C.char
+	Font       *C.char
+	Width      C.int
+	Height     C.int
+	OffsetX    C.int
+	OffsetY    C.int
+	Alignment  C.VipsAlign
+	DPI        C.int
+	AutofitDPI C.int
+	Margin     C.int
+	Opacity    C.float
+	Color      [3]C.double
 }
 
 func labelImage(in *C.VipsImage, params *LabelParams) (*C.VipsImage, error) {
@@ -62,26 +64,22 @@ func labelImage(in *C.VipsImage, params *LabelParams) (*C.VipsImage, error) {
 	h := params.Height.GetRounded(int(in.Ysize))
 	offsetX := params.OffsetX.GetRounded(int(in.Xsize))
 	offsetY := params.OffsetY.GetRounded(int(in.Ysize))
-
-	if params.DPI <= 0 {
-		params.DPI = 72
-	}
-
 	if params.Opacity <= 0 || params.Opacity > 1 {
 		params.Opacity = 1
 	}
 
 	opts := vipsLabelOptions{
-		Text:      text,
-		Font:      font,
-		Width:     C.int(w),
-		Height:    C.int(h),
-		OffsetX:   C.int(offsetX),
-		OffsetY:   C.int(offsetY),
-		Alignment: C.VipsAlign(params.Alignment),
-		DPI:       C.int(params.DPI),
-		Opacity:   C.float(params.Opacity),
-		Color:     color,
+		Text:       text,
+		Font:       font,
+		Width:      C.int(w),
+		Height:     C.int(h),
+		OffsetX:    C.int(offsetX),
+		OffsetY:    C.int(offsetY),
+		Alignment:  C.VipsAlign(params.Alignment),
+		DPI:        C.int(params.DPI),
+		AutofitDPI: C.int(params.AutofitDPI),
+		Opacity:    C.float(params.Opacity),
+		Color:      color,
 	}
 
 	// todo: release inline pointer?

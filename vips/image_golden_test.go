@@ -432,6 +432,17 @@ func TestImage_Rotate(t *testing.T) {
 		}, nil)
 }
 
+func TestImage_RotateAny(t *testing.T) {
+	goldenTest(t, resources+"jpg-24bit-icc-iec.jpg",
+		func(img *ImageRef) error {
+			return img.RotateAny(45, &ColorRGBA{128, 128, 128, 128})
+		},
+		func(result *ImageRef) {
+			assert.Equal(t, 2942, result.Width())
+			assert.Equal(t, 2942, result.Height())
+		}, nil)
+}
+
 func TestImageRef_Linear1(t *testing.T) {
 	goldenTest(t, resources+"png-24bit.png", func(img *ImageRef) error {
 		return img.Linear1(3, 4)

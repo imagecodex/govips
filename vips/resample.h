@@ -22,3 +22,4 @@ int thumbnail_buffer_with_option(void *buf, size_t len, VipsImage **out,
                     const char *option_string);
 int mapim(VipsImage *in, VipsImage **out, VipsImage *index);
 int maplut(VipsImage *in, VipsImage **out, VipsImage *lut);
+int rotate(VipsImage *in, VipsImage **out, double angle, double r, double g, double b, double a);

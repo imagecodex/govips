@@ -144,3 +144,18 @@ func vipsMaplut(in *C.VipsImage, lut *C.VipsImage) (*C.VipsImage, error) {
 
 	return out, nil
 }
+
+// https://www.libvips.org/API/current/libvips-resample.html#vips-rotate
+func vipsRotate(in *C.VipsImage, angle float64, backgound *ColorRGBA) (*C.VipsImage, error) {
+	incOpCounter("rotate")
+	var out *C.VipsImage
+
+	if err := C.rotate(in, &out, C.double(angle),
+		C.double(backgound.R), C.double(backgound.G),
+		C.double(backgound.B), C.double(backgound.A),
+	); err != 0 {
+		return nil, handleImageError(out)
+	}
+
+	return out, nil
+}

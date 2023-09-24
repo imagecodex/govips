@@ -299,7 +299,7 @@ func vipsCrop(in *C.VipsImage, left int, top int, width int, height int) (*C.Vip
 }
 
 // https://libvips.github.io/libvips/API/current/libvips-conversion.html#vips-rot
-func vipsRotate(in *C.VipsImage, angle Angle) (*C.VipsImage, error) {
+func vipsRot(in *C.VipsImage, angle Angle) (*C.VipsImage, error) {
 	incOpCounter("rot")
 	var out *C.VipsImage
 

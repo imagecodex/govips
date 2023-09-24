@@ -1898,7 +1898,7 @@ func (r *ImageRef) Rotate(angle Angle) error {
 
 	}
 
-	out, err := vipsRotate(r.image, angle)
+	out, err := vipsRot(r.image, angle)
 	if err != nil {
 		return err
 	}
@@ -1909,6 +1909,25 @@ func (r *ImageRef) Rotate(angle Angle) error {
 			return err
 		}
 	}
+	return nil
+}
+
+// RotateAny rotates the image by any angle in range [0,360].
+func (r *ImageRef) RotateAny(angle float64, background *ColorRGBA) error {
+	if background == nil {
+		background = &ColorRGBA{
+			R: 255,
+			G: 255,
+			B: 255,
+			A: 255,
+		}
+	}
+
+	out, err := vipsRotate(r.image, angle, background)
+	if err != nil {
+		return err
+	}
+	r.setImage(out)
 	return nil
 }
 

@@ -59,3 +59,23 @@ int maplut(VipsImage *in, VipsImage **out, VipsImage *lut) {
   return vips_maplut(in, out, lut, NULL);
 }
 
+int rotate(VipsImage *in, VipsImage **out, double angle, double r, double g, double b, double a) {
+  double background[3] = {r, g, b};
+  double backgroundRGBA[4] = {r, g, b, a};
+
+  VipsArrayDouble *vipsBackground;
+
+  // Ignore the alpha channel if the image doesn't have one
+  if (in->Bands <= 3) {
+    vipsBackground = vips_array_double_new(background, 3);
+  } else {
+    vipsBackground = vips_array_double_new(backgroundRGBA, 4);
+  }
+
+  int code = vips_rotate(in, out, angle, "background", vipsBackground, NULL);
+  
+  vips_area_unref(VIPS_AREA(vipsBackground));
+  return code;
+}
+
+
